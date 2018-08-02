@@ -16,11 +16,17 @@
     </div>
     {{end}}
 
-    {{with .Params.LastModifierDisplayName}}
+    {{ if $.GitInfo }}      <!-- To enable this, put "enableGitInfo = true" in your site config.toml or --enableGitiNFO -->
     <div class="author">
-        <i class='fa fa-user'></i> <a href="mailto:{{ $.Params.LastModifierEmail }}">{{ . }}</a>
+      <i class='fa fa-user'></i> <a href="mailto:{{ .GitInfo.AuthorEmail }}">{{ .GitInfo.AuthorName }}</a>
     </div>
-    {{end}}
+    {{ else }}
+      {{with .Params.LastModifierDisplayName}}
+        <div class="author">
+            <i class='fa fa-user'></i> <a href="mailto:{{ $.Params.LastModifierEmail }}">{{ . }}</a>
+        </div>
+      {{end}}
+    {{ end }}
 
   {{ if not .Page.Lastmod.IsZero }}
     <div class="date">
